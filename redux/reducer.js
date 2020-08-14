@@ -1,19 +1,34 @@
 import { combineReducers } from 'redux';
 
 //按鈕轉換
-function changeButton(state = false, action) {
+function number1(state = '', action) {
     switch (action.type) {
-        case 'AC':
-            return false;
-        case 'C':
-            return true;
+        case 'NUMBER1':
+            return action.number;
+        default:
+            return state;
+    }
+}
+function number2(state = '', action) {
+    switch (action.type) {
+        case 'NUMBER2':
+            return action.number;
+        default:
+            return state;
+    }
+}
+
+function number3(state = 0, action) {
+    switch (action.type) {
+        case 'NUMBER3':
+            return action.number1;
         default:
             return state;
     }
 }
 
 //運算
-function calculation(state = 0, action) {
+function calculation(state = '', action) {
     switch (action.type) {
         case 'PLUS':
             return action.number1+ action.number2
@@ -28,6 +43,6 @@ function calculation(state = 0, action) {
     }
 }
 
-const itemApp = combineReducers({ changeButton,calculation });
+const itemApp = combineReducers({ number1,number2,number3,calculation });
 
 export default itemApp;

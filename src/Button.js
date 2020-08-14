@@ -14,7 +14,7 @@ class Button extends Component {
             number: '',
             number2: '',
             ifCalculation: false,
-            calculator: ''
+            calculator: '',
         }
     }
     //連續算
@@ -74,9 +74,7 @@ class Button extends Component {
                             <TouchableOpacity
                                 style={styles.button2}
                                 onPress={() => {
-
                                     this.setState({ ifCalculation: true, calculator: 'division', });
-
                                 }}
                             >
                                 <Text style={styles.text}>÷</Text>
@@ -276,7 +274,7 @@ class Button extends Component {
                                             this.setState({ number: this.state.number + '.' });
                                         }
                                     }
-                                   
+
                                     this.props.C('C');
                                 }}
                             >
@@ -297,9 +295,7 @@ class Button extends Component {
                                     } else if (this.state.calculator === 'multiply') {
                                         this.setState({ number: this.state.number * this.state.number2, ifCalculation: false, number2: '', calculator: '' });
                                     }
-                                    // else if (this.state.calculator === '') {
-
-                                    // }
+                                   
                                 }}
                             >
                                 <Text style={styles.text}>=</Text>
@@ -315,29 +311,33 @@ class Button extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        backgroundColor: '#444444',
     },
     view: {
         flex: 1,
-        //marginTop:30,
     },
     view2: {
         flex: 4,
     },
     buttonContainer: {
         flexDirection: 'row',
-
     },
     button: {
-        backgroundColor: '#4F4F4F'
+        backgroundColor: '#4F4F4F',
+        height: 110,
+        justifyContent: 'center',
     },
     button2: {
-        backgroundColor: '#FF8000'
+        backgroundColor: '#FF8000',
+        height: 110,
+        justifyContent: 'center',
     },
     button3: {
-        backgroundColor: '#8E8E8E'
+        backgroundColor: '#8E8E8E',
+        height: 110,
+        justifyContent: 'center',
     },
-
     buttonView: {
         flex: 1,
     },
@@ -345,12 +345,14 @@ const styles = StyleSheet.create({
         flex: 2,
     },
     text: {
-        fontSize: 20,
+        fontSize: 50,
         alignSelf: 'center',
+        color: 'white'
     },
     text1: {
-        fontSize: 90,
+        fontSize: 50,
         alignSelf: 'flex-end',
+        color: 'white',
     },
 });
 

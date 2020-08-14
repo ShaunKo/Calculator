@@ -11,8 +11,9 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import itemApp from './redux/reducer.js';
 
 
- import Button from './src/Button.js';
-
+//  import Button from './src/Button.js';
+ import NewButton from './src/NewButton.js';
+ import Test from './src/Test.js'
 export default class App extends Component {
   
   render() {
@@ -20,7 +21,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         
-          <Button />
+          <NewButton />
         
       </Provider>
     );

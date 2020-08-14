@@ -1,24 +1,35 @@
 // AC換Ｃ
 
-export const AC = () => (
+export const number1 = (number) => (
     {
-        type: 'AC'
+        type: 'NUMBER1',
+        number
     }
 )
 
-export const C = () =>(
+export const number2 = (number) =>(
     {
-        type: 'C'
+        type: 'NUMBER2',
+        number
     }
 )
+
+export const number3 = (number1,number2) =>(
+    {
+        type: 'NUMBER3',
+        number1,
+        number2
+    }
+)
+
 
 
 //運算
 export const plus = (number1,number2) => (
     {
         type:'PLUS',
-        number1:number1,
-        number2:number2,
+        number1,
+        number2,
     }
 )
 
