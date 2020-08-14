@@ -94,9 +94,7 @@ export default class Calculator extends Component {
                             return (
                                 <View style={{ flex: 1 }}>
                                     <Text>{
-                                    
                                     data.id
-                                    
                                     }</Text>
                                 </View>
                             )
