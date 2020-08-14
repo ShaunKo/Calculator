@@ -9,7 +9,7 @@ import {
 import { Provider, useSelector } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import itemApp from './redux/reducer.js';
-
+import Calculator from './src/Calculator.js';
 
 //  import Button from './src/Button.js';
  import NewButton from './src/NewButton.js';
@@ -21,7 +21,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         
-          <NewButton />
+          <Calculator />
         
       </Provider>
     );
