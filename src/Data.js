@@ -104,9 +104,12 @@ export const DATATEST = [
       color: 'orange',
     },
   ],
-]
+];
 //行數
-export const rows = [0, 1, 2, 3, 4]
+// export const rows = [0, 1, 2, 3, 4];
+
+export const arrayNumber = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+export const arrayOperator = ['+', '-', '*', '/'];
 
 export const data = [
   {
@@ -139,19 +142,19 @@ export const data = [
   {
     id: '0',
   },
-]
+];
 
 export const data1 = [
   {
-    id: '+'
+    id: '+',
   },
   {
-    id: '-'
+    id: '-',
   },
   {
-    id: '*'
+    id: '*',
   },
   {
-    id: '/'
+    id: '/',
   },
-]
+];
