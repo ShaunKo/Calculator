@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {DATATEST, arrayNumber, arrayOperator} from './Data.js';
-
+//等於後清空
 export default class Calculator extends Component {
   constructor(props) {
     super(props);
@@ -10,26 +10,24 @@ export default class Calculator extends Component {
       enterSecondNumber: false,
       firstNumber: 0, //第1個輸入的number
       secondNumber: 0, //第2個輸入的number
-      consequenceNumber: '', //結果
+      tempNumber: 0,
       operator: '', //運算元
       isC: false,
-      isEquel: false, //按下equel
+      isEqual: false,
     };
   }
 
   press = (title) => {
     //數字
     arrayNumber.map((value) => {
-      let d = {id: value};
-      if (title === d.id) {
+      //let d = {id: value};
+      if (title === value) {
         let state = {};
         if (this.state.prepareToEnterSecondNumber) {
           state.enterSecondNumber = true;
-          state.secondNumber = parseFloat(this.state.secondNumber + d.id);
+          state.secondNumber = this.state.secondNumber + value;
         } else {
-          state.firstNumber = parseFloat(this.state.firstNumber + d.id);
-          state.isEquel = false;
-          state.consequenceNumber = '';
+          state.firstNumber = this.state.firstNumber + value;
           state.secondNumber = '';
         }
         state.isC = true;
@@ -40,65 +38,115 @@ export default class Calculator extends Component {
     // true => prepare to enter secondNumber(still show firstNumber); (as well as push the button of numbers, it will show secondNumber)
     //false => do firstNumber (operator) secondNumber, store in firstNumber then clear secondNumber (shows firstNumber)
     arrayOperator.map((value) => {
-      let d = {id: value};
-      if (title === d.id) {
+      //let d = {id: value};
+      if (title === value) {
         let state = {};
-        if (this.state.isEquel) {
-          state.firstNumber = this.state.consequenceNumber;
-          state.isEquel = false;
-          state.prepareToEnterSecondNumber = true;
-          //state.enterSecondNumber = true;
-          state.secondNumber = '';
-        } else {
-          if (this.state.secondNumber === '') {
-            //secondNumber is empty
-            if (d.id === '+') {
-              state.operator = '+';
-            } else if (d.id === '-') {
-              state.operator = '-';
-            } else if (d.id === '*') {
-              state.operator = '*';
-            } else if (d.id === '/') {
-              state.operator = '/';
-            }
-            state.prepareToEnterSecondNumber = true;
-          } else {
+        let firstValue = parseFloat(this.state.firstNumber);
+        if (this.state.secondNumber === '') {
+          //secondNumber is empty
+          if (value === '+') {
+            state.operator = '+';
+            //state.tempNumber = this.state.firstNumber;
+          } else if (value === '-') {
+            state.operator = '-';
+            //state.tempNumber = this.state.firstNumber;
+          } else if (value === '*') {
+            state.operator = '*';
+            //state.tempNumber = this.state.firstNumber;
+          } else if (value === '/') {
+            state.operator = '/';
+            //state.tempNumber = this.state.firstNumber;
+          } else if (value === '=') {
             if (this.state.operator === '+') {
               state.firstNumber =
-                this.state.firstNumber + this.state.secondNumber;
-              state.operator = d.id;
+                parseFloat(this.state.firstNumber) +
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             } else if (this.state.operator === '-') {
               state.firstNumber =
-                this.state.firstNumber - this.state.secondNumber;
-              state.operator = d.id;
+                parseFloat(this.state.firstNumber) -
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             } else if (this.state.operator === '*') {
               state.firstNumber =
-                this.state.firstNumber * this.state.secondNumber;
-              state.operator = d.id;
+                parseFloat(this.state.firstNumber) *
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             } else if (this.state.operator === '/') {
               state.firstNumber =
-                this.state.firstNumber / this.state.secondNumber;
-              state.operator = d.id;
+                parseFloat(this.state.firstNumber) /
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             }
-            state.enterSecondNumber = false;
+            state.secondNumber = this.state.firstNumber;
+            state.isEqual = true;
+            state.prepareToEnterSecondNumber = false;
+            console.log('aaa')
+          }
+          state.prepareToEnterSecondNumber = true;
+        } else {
+          let secondValue = parseFloat(this.state.secondNumber);
+          if (value === '=') {
+            if (this.state.operator === '+') {
+              state.firstNumber = firstValue + secondValue;
+            } else if (this.state.operator === '-') {
+              state.firstNumber = firstValue - secondValue;
+            } else if (this.state.operator === '*') {
+              state.firstNumber = firstValue * secondValue;
+            } else if (this.state.operator === '/') {
+              state.firstNumber = firstValue / secondValue;
+            }
+            state.isEqual = true;
+            state.prepareToEnterSecondNumber = false;
+            console.log('===')
+          } else {
+            if (this.state.operator === '+') {
+              if (this.state.isEqual) {
+                state.firstNumber = firstValue;
+              } else {
+                state.firstNumber = firstValue + secondValue;
+              }
+            } else if (this.state.operator === '-') {
+              if (this.state.isEqual) {
+                state.firstNumber = firstValue;
+              } else {
+                state.firstNumber = firstValue - secondValue;
+              }
+            } else if (this.state.operator === '*') {
+              if (this.state.isEqual) {
+                state.firstNumber = firstValue;
+              } else {
+                state.firstNumber = firstValue * secondValue;
+              }
+            } else if (this.state.operator === '/') {
+              if (this.state.isEqual) {
+                state.firstNumber = firstValue;
+              } else {
+                state.firstNumber = firstValue / secondValue;
+              }
+            }
+            state.isEqual = false;
             state.secondNumber = '';
+            state.operator = value;
+            console.log('ttt')
           }
         }
+        state.enterSecondNumber = false;
+        //}
         this.setState(state);
       }
     });
 
     //歸零
     if (title === 'AC' || title === 'C') {
-      let state = {};
-      state.firstNumber = '';
-      state.secondNumber = '';
-      state.operator = '';
-      state.enterSecondNumber = false;
-      state.prepareToEnterSecondNumber = false;
-      state.isC = false;
-      state.isEquel = false;
-      this.setState(state);
+      this.setState({
+        firstNumber: 0,
+        secondNumber: 0,
+        operator: '',
+        enterSecondNumber: false,
+        prepareToEnterSecondNumber: false,
+        isC: false,
+      });
     }
 
     //正負
@@ -137,55 +185,6 @@ export default class Calculator extends Component {
       }
       this.setState(state);
     }
-
-    if (title === '=') {
-      //如果是=則清空firstnumber
-      let state = {};
-      if (this.state.operator === '+') {
-        if (this.state.consequenceNumber === '') {
-          state.consequenceNumber =
-            this.state.firstNumber + this.state.secondNumber;
-          state.firstNumber = '';
-        } else {
-          state.consequenceNumber =
-            this.state.consequenceNumber + this.state.secondNumber;
-        }
-      } else if (this.state.operator === '-') {
-        if (this.state.consequenceNumber === '') {
-          state.consequenceNumber =
-            this.state.firstNumber - this.state.secondNumber;
-          state.firstNumber = '';
-        } else {
-          state.consequenceNumber =
-            this.state.consequenceNumber - this.state.secondNumber;
-        }
-      } else if (this.state.operator === '*') {
-        if (this.state.consequenceNumber === '') {
-          state.consequenceNumber =
-            this.state.firstNumber * this.state.secondNumber;
-          state.firstNumber = '';
-        } else {
-          state.consequenceNumber =
-            this.state.consequenceNumber * this.state.secondNumber;
-        }
-      } else if (this.state.operator === '/') {
-        if (this.state.consequenceNumber === '') {
-          state.consequenceNumber =
-            this.state.firstNumber / this.state.secondNumber;
-          state.firstNumber = '';
-        } else {
-          state.consequenceNumber =
-            this.state.consequenceNumber / this.state.secondNumber;
-        }
-      } else if (this.state.operator === '') {
-        state.consequenceNumber = this.state.firstNumber;
-      }
-      state.isEquel = true;
-      state.enterSecondNumber = false;
-      state.prepareToEnterSecondNumber = false;
-      this.setState(state);
-      console.log(this.state.consequenceNumber);
-    }
   };
 
   render() {
@@ -193,11 +192,9 @@ export default class Calculator extends Component {
       <View style={styles.container}>
         <View style={styles.showNumber}>
           <Text style={styles.viewText}>
-            {this.state.isEquel
-              ? this.state.consequenceNumber
-              : this.state.enterSecondNumber
+            {this.state.enterSecondNumber
               ? this.state.secondNumber
-              : this.state.firstNumber}
+              : parseFloat(this.state.firstNumber)}
           </Text>
         </View>
         <View style={styles.buttons}>

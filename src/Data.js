@@ -109,7 +109,7 @@ export const DATATEST = [
 // export const rows = [0, 1, 2, 3, 4];
 
 export const arrayNumber = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-export const arrayOperator = ['+', '-', '*', '/'];
+export const arrayOperator = ['+', '-', '*', '/', '='];
 
 export const data = [
   {
