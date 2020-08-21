@@ -80,9 +80,40 @@ export default class Calculator extends Component {
             }
             state.secondNumber = this.state.firstNumber;
             state.isEqual = true;
-            state.prepareToEnterSecondNumber = false;
+            //state.prepareToEnterSecondNumber = false;
             console.log('aaa')
           }
+//** */
+          // if (value === '=') {
+          //   if (this.state.operator === '+') {
+          //     state.firstNumber =
+          //       parseFloat(this.state.firstNumber) +
+          //       parseFloat(this.state.firstNumber);
+          //     state.secondNumber = 0;
+          //   } else if (this.state.operator === '-') {
+          //     state.firstNumber =
+          //       parseFloat(this.state.firstNumber) -
+          //       parseFloat(this.state.firstNumber);
+          //     state.secondNumber = 0;
+          //   } else if (this.state.operator === '*') {
+          //     state.firstNumber =
+          //       parseFloat(this.state.firstNumber) *
+          //       parseFloat(this.state.firstNumber);
+          //     state.secondNumber = 0;
+          //   } else if (this.state.operator === '/') {
+          //     state.firstNumber =
+          //       parseFloat(this.state.firstNumber) /
+          //       parseFloat(this.state.firstNumber);
+          //     state.secondNumber = 0;
+          //   }
+          //   state.secondNumber = this.state.firstNumber;
+          //   state.isEqual = true;
+          //   //state.prepareToEnterSecondNumber = false;
+          //   console.log('aaa')
+          // } else {
+          //   state.operator = value;
+          // }
+
           state.prepareToEnterSecondNumber = true;
         } else {
           let secondValue = parseFloat(this.state.secondNumber);
@@ -97,7 +128,7 @@ export default class Calculator extends Component {
               state.firstNumber = firstValue / secondValue;
             }
             state.isEqual = true;
-            state.prepareToEnterSecondNumber = false;
+            //state.prepareToEnterSecondNumber = false;
             console.log('===')
           } else {
             if (this.state.operator === '+') {
