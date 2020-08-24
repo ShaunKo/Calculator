@@ -51,13 +51,25 @@ export default class Calculator extends Component {
         if (this.state.secondNumber === '') {
           if (value === '=') {
             if (this.state.operator === '+') {
-              state.firstNumber = firstValue + firstValue;
+              state.firstNumber =
+                parseFloat(this.state.firstNumber) +
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             } else if (this.state.operator === '-') {
-              state.firstNumber = firstValue - firstValue;
+              state.firstNumber =
+                parseFloat(this.state.firstNumber) -
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             } else if (this.state.operator === '*') {
-              state.firstNumber = firstValue * firstValue;
+              state.firstNumber =
+                parseFloat(this.state.firstNumber) *
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             } else if (this.state.operator === '/') {
-              state.firstNumber = firstValue / firstValue;
+              state.firstNumber =
+                parseFloat(this.state.firstNumber) /
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             }
             state.secondNumber = this.state.firstNumber;
             state.isEqual = true;
@@ -81,11 +93,11 @@ export default class Calculator extends Component {
             }
             state.isEqual = true;
             state.prepareToEnterSecondNumber = false;
-            //state.secondNumber = '';
           } else {
             if (this.state.operator === '+') {
               if (this.state.isEqual) {
                 state.firstNumber = firstValue;
+                console.log('---')
               } else {
                 state.firstNumber = firstValue + secondValue;
               }

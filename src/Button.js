@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {DATATEST, arrayNumber, arrayOperator} from './Data.js';
-//等於併入（只用兩個變數）
-//等於接四則運算
+//等於後清空
 export default class Calculator extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +27,15 @@ export default class Calculator extends Component {
           state.enterSecondNumber = true;
           state.secondNumber = this.state.secondNumber + value;
         } else {
-          state.firstNumber = this.state.firstNumber + value;
+          if (this.state.isEqual) {
+            this.setState({firstNumber: 0}, () => {
+              this.setState({
+                firstNumber: parseFloat(this.state.firstNumber + value),
+              });
+            });
+          } else {
+            state.firstNumber = this.state.firstNumber + value;
+          }
           state.secondNumber = '';
         }
         state.isC = true;
@@ -45,39 +52,76 @@ export default class Calculator extends Component {
         let firstValue = parseFloat(this.state.firstNumber);
         if (this.state.secondNumber === '') {
           //secondNumber is empty
-          if (value === '+') {
-            state.operator = '+';
-            state.tempNumber = this.state.firstNumber;
-          } else if (value === '-') {
-            state.operator = '-';
-            state.tempNumber = this.state.firstNumber;
-          } else if (value === '*') {
-            state.operator = '*';
-            state.tempNumber = this.state.firstNumber;
-          } else if (value === '/') {
-            state.operator = '/';
-            state.tempNumber = this.state.firstNumber;
-          } else if (value === '=') {
+          // if (value === '+') {
+          //   state.operator = '+';
+          //   //state.tempNumber = this.state.firstNumber;
+          // } else if (value === '-') {
+          //   state.operator = '-';
+          //   //state.tempNumber = this.state.firstNumber;
+          // } else if (value === '*') {
+          //   state.operator = '*';
+          //   //state.tempNumber = this.state.firstNumber;
+          // } else if (value === '/') {
+          //   state.operator = '/';
+          //   //state.tempNumber = this.state.firstNumber;
+          // } else if (value === '=') {
+          //   if (this.state.operator === '+') {
+          //     state.firstNumber =
+          //       parseFloat(this.state.firstNumber) +
+          //       parseFloat(this.state.firstNumber);
+          //     state.secondNumber = 0;
+          //   } else if (this.state.operator === '-') {
+          //     state.firstNumber =
+          //       parseFloat(this.state.firstNumber) -
+          //       parseFloat(this.state.firstNumber);
+          //     state.secondNumber = 0;
+          //   } else if (this.state.operator === '*') {
+          //     state.firstNumber =
+          //       parseFloat(this.state.firstNumber) *
+          //       parseFloat(this.state.firstNumber);
+          //     state.secondNumber = 0;
+          //   } else if (this.state.operator === '/') {
+          //     state.firstNumber =
+          //       parseFloat(this.state.firstNumber) /
+          //       parseFloat(this.state.firstNumber);
+          //     state.secondNumber = 0;
+          //   }
+          //   state.secondNumber = this.state.firstNumber;
+          //   state.isEqual = true;
+          //   //state.prepareToEnterSecondNumber = false;
+          //   console.log('aaa')
+          // }
+          //** */
+          if (value === '=') {
             if (this.state.operator === '+') {
               state.firstNumber =
                 parseFloat(this.state.firstNumber) +
-                parseFloat(this.state.tempNumber);
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             } else if (this.state.operator === '-') {
               state.firstNumber =
                 parseFloat(this.state.firstNumber) -
-                parseFloat(this.state.tempNumber);
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             } else if (this.state.operator === '*') {
               state.firstNumber =
                 parseFloat(this.state.firstNumber) *
-                parseFloat(this.state.tempNumber);
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             } else if (this.state.operator === '/') {
               state.firstNumber =
                 parseFloat(this.state.firstNumber) /
-                parseFloat(this.state.tempNumber);
+                parseFloat(this.state.firstNumber);
+              state.secondNumber = 0;
             }
-            console.log('aaa')
+            state.secondNumber = this.state.firstNumber;
+            state.isEqual = true;
+            state.prepareToEnterSecondNumber = false;
+          } else {
+            state.operator = value;
+            state.isEqual = false;
+            state.prepareToEnterSecondNumber = true;
           }
-          state.prepareToEnterSecondNumber = true;
         } else {
           let secondValue = parseFloat(this.state.secondNumber);
           if (value === '=') {
@@ -90,16 +134,36 @@ export default class Calculator extends Component {
             } else if (this.state.operator === '/') {
               state.firstNumber = firstValue / secondValue;
             }
+            state.isEqual = true;
+            state.prepareToEnterSecondNumber = false;
           } else {
             if (this.state.operator === '+') {
-              state.firstNumber = firstValue + secondValue;
+              if (this.state.isEqual) {
+                state.firstNumber = firstValue;
+                console.log('---')
+              } else {
+                state.firstNumber = firstValue + secondValue;
+              }
             } else if (this.state.operator === '-') {
-              state.firstNumber = firstValue - secondValue;
+              if (this.state.isEqual) {
+                state.firstNumber = firstValue;
+              } else {
+                state.firstNumber = firstValue - secondValue;
+              }
             } else if (this.state.operator === '*') {
-              state.firstNumber = firstValue * secondValue;
+              if (this.state.isEqual) {
+                state.firstNumber = firstValue;
+              } else {
+                state.firstNumber = firstValue * secondValue;
+              }
             } else if (this.state.operator === '/') {
-              state.firstNumber = firstValue / secondValue;
+              if (this.state.isEqual) {
+                state.firstNumber = firstValue;
+              } else {
+                state.firstNumber = firstValue / secondValue;
+              }
             }
+            state.isEqual = false;
             state.secondNumber = '';
             state.operator = value;
           }
